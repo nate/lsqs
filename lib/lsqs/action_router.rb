@@ -10,6 +10,15 @@ module LSQS
       @queue_list = queue_list
     end
     
+    ##
+    # Distributes an action to the appropriate class. If an action does not
+    # exist, it throws an error.
+    #
+    # @param [String] action_name
+    # @param [Hash] options
+    #
+    # @return [LSQS::Actions::Base]
+    #
     def distribute(action_name, options)
       if LSQS::Actions.const_defined?(action_name)
         action = LSQS::Actions.const_get(action_name).new(queue_list)
