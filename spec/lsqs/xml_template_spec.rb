@@ -16,6 +16,7 @@ describe LSQS::XMLTemplate do
       @action = OpenStruct.new(:name => 'Foo', :to_xml => '<Bar>Foo Bar</Bar>')
       @result = @xml_template.render(@action)
     end
+    
     it 'renders XML and returns a string' do      
       @result.kind_of?(String).should be_truthy
     end
