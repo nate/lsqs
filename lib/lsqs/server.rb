@@ -1,5 +1,13 @@
 module LSQS
   class Server < Sinatra::Base
+    configure do
+      set :dump_errors, false
+      set :raise_errors, true
+      set :show_exceptions, false
+      
+      use LSQS::ErrorHandler
+    end
+    
     helpers do
       
       ##
@@ -40,10 +48,12 @@ module LSQS
       return {:body => render(result)}.to_json
     end
     
-    post "/:queue" do
-      result = LSQS.router.distributel(action, params)
+    # To keep the Amazon convention the queue name is stored
+    # in params['QueueName']
+    post "/:QueueName" do
+      result = LSQS.router.distribute(action, params)
       
       return {:body => render(result)}.to_json
-    end 
+    end
   end # Server
 end # LSQS
