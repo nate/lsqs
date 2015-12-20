@@ -27,6 +27,22 @@ module LSQS
     end
     
     ##
+    # Renders the XML that is required for an error response
+    #
+    # @param [String] error
+    #
+    # @return [String]
+    #
+    def render_error(error)
+      options = {
+        'error'      => error,
+        'request_id' => request_id
+      }
+      
+      template.render(options)
+    end
+    
+    ##
     # Generates a request ID.
     #
     # @return [String]
