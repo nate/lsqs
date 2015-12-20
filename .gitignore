@@ -1,0 +1,7 @@
+yardoc
+Gemfile.lock
+pkg
+coverage
+log/*.log
+.DS_Store
+tmp
