@@ -11,10 +11,16 @@ secret key are needed.
 
 At the moment these types of transactions are implemented:
 `CreateQueue`
-`DeleteMessageBatch`
+`PurgeQueue`
+`ListQueues`
+`DeleteQueue`
 `GetQueueUrl`
 `ReceiveMessage`
 `SendMessage`
+`SendMessageBatch`
+`DeleteMessage`
+`DeleteMessageBatch`
+`ChangeMessageVisibility`
 
 ## Requirements
 
@@ -25,6 +31,8 @@ At the moment these types of transactions are implemented:
 Just install the gem:
 
     gem install lsqs
+
+It doesn't require the `aws-sdk` itself.
 
 ## Usage
 
