@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+require File.expand_path('../../lib/lsqs', __FILE__)
+
+Puma::CLI.new(ARGV).run
