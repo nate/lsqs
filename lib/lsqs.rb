@@ -22,6 +22,12 @@ require_relative 'lsqs/actions/receive_message'
 require_relative 'lsqs/actions/create_queue'
 require_relative 'lsqs/actions/send_message'
 require_relative 'lsqs/actions/delete_message_batch'
+require_relative 'lsqs/actions/purge_queue'
+require_relative 'lsqs/actions/list_queues'
+require_relative 'lsqs/actions/delete_queue'
+require_relative 'lsqs/actions/delete_message'
+require_relative 'lsqs/actions/send_message_batch'
+require_relative 'lsqs/actions/change_message_visibility'
 
 module LSQS
   def self.template
