@@ -35,8 +35,6 @@ module LSQS
     post '/' do
       params['base_url'] = base_url
       
-      require 'pry'; binding.pry
-      
       result = LSQS.router.distribute(action, params)
   
       return {:body => render(result)}.to_json
