@@ -3,7 +3,6 @@ require 'spec_helper'
 describe LSQS::Queue do
   before do
     @queue = described_class.new('test')
-    @queue.purge
   end
   
   describe '#initialize' do
