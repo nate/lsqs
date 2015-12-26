@@ -10,6 +10,7 @@ module LSQS
       @monitor    = Monitor.new
       @messages   = []
       @in_flight  = {}
+      @timeout    = true
       
       check_timeout
     end
@@ -131,21 +132,6 @@ module LSQS
     end
     
     ##
-    # Initializes a thread that checks every 5 seconds if messages need
-    # to be put back from flight to the message queue.
-    #
-    def check_timeout
-      Thread.new do
-        while true
-          unless in_flight.empty?
-            timeout_messages
-          end
-          sleep(5)
-        end
-      end
-    end
-    
-    ##
     # Checks if in-fligh messages need to be put back in the queue.
     # 
     def timeout_messages
@@ -156,6 +142,23 @@ module LSQS
             @messages << message
             delete_message(key)
           end
+        end
+      end
+    end
+    
+    protected
+    
+    ##
+    # Initializes a thread that checks every 5 seconds if messages need
+    # to be put back from flight to the message queue.
+    #
+    def check_timeout
+      Thread.new do
+        while @timeout
+          unless in_flight.empty?
+            timeout_messages
+          end
+          sleep(5)
         end
       end
     end
