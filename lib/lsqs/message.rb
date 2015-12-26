@@ -4,7 +4,7 @@ module LSQS
     attr_accessor :visibility_timeout
 
     def initialize(options = {})
-      @body = options['MessageBody']
+      @body = options['MessageBody'] || ''
       @id   = options.fetch('Id') { SecureRandom.uuid }
       @md5  = options.fetch('MD5') { Digest::MD5.hexdigest(body) }
     end
