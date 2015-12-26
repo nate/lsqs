@@ -250,6 +250,59 @@ describe 'Testing actions against the aws-sdk' do
     end
   end
   
+  describe '#delete_message_batch' do
+    it 'throws an error if queue does not exist' do  
+      entries = [
+              {
+                :receipt_handle => 'foo',
+                :id             => 'test1'
+              }, 
+              {
+                :receipt_handle => 'bar',
+                :id             => 'test2'
+              }
+            ]    
+      queue_url = "#{@url}/test"
+      expect{
+        @client.delete_message_batch(:queue_url => queue_url, :entries => entries)
+      }.to raise_error(Aws::SQS::Errors::Error400, 'NonExistentQueue')
+    end
+    
+    it 'throws message not in flight error after deleting successfully' do
+      queue = @client.create_queue(:queue_name => 'delete_batch_test')
+      entry1    = {:foo => 'bar'}
+      entry2    = {:hey => 'hello'}
+      queue_url = queue.queue_url
+      
+      @client.send_message(:queue_url => queue_url, :message_body => entry1.to_json)
+      @client.send_message(:queue_url => queue_url, :message_body => entry2.to_json)
+      
+      response = @client.receive_message(:queue_url => queue_url, :max_number_of_messages => 2)
+      
+      entries = response.messages.map do |m| 
+        {:receipt_handle => m.receipt_handle, :id => m.message_id}
+      end
+      
+      @client.delete_message_batch(:queue_url => queue_url, :entries => entries)
+      
+      expect{
+        @client.change_message_visibility(
+          :queue_url => queue_url, 
+          :receipt_handle => response.messages.first.receipt_handle, 
+          :visibility_timeout => 0
+        )
+      }.to raise_error(Aws::SQS::Errors::Error400, 'MessageNotInflight')
+      
+      expect{
+        @client.change_message_visibility(
+          :queue_url => queue_url, 
+          :receipt_handle => response.messages.last.receipt_handle, 
+          :visibility_timeout => 0
+        )
+      }.to raise_error(Aws::SQS::Errors::Error400, 'MessageNotInflight')
+    end
+  end
+  
   describe '#change_message_visibility' do
     it 'throws an error if queue does not exist' do      
       queue_url = "#{@url}/test"
