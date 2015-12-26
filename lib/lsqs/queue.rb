@@ -48,7 +48,7 @@ module LSQS
     # @return [Hash]
     #
     def get_messages(options = {})
-      number_of_messages = options.fetch('MaxNumberOfMessages'){1}
+      number_of_messages = options.fetch('MaxNumberOfMessages'){1}.to_i
 
       raise 'ReadCountOutOfRange' if number_of_messages > 10
 
