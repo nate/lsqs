@@ -45,7 +45,7 @@ module LSQS
 
       result = LSQS.router.distribute(action, params)
 
-      return {:body => render(result)}.to_json
+      body render(result)
     end
 
     # To keep the Amazon convention the queue name is stored
@@ -53,7 +53,7 @@ module LSQS
     post "/:QueueName" do
       result = LSQS.router.distribute(action, params)
 
-      return {:body => render(result)}.to_json
+      body render(result)
     end
   end # Server
 end # LSQS
