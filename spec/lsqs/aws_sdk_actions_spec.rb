@@ -7,7 +7,7 @@ describe 'Testing actions against the aws-sdk' do
     port     = 8080
     @url     = "http://#{base_url}:#{port}"
     Aws.config.update(:endpoint => @url)
-    @client = Aws::SQS::Client.new
+    @client = Aws::SQS::Client.new(:region => "us-east-1", :access_key_id => "filler", :secret_access_key => "filler")
   end
 
   after do
