@@ -11,9 +11,9 @@ module LSQS
       def perform(params)
         name  = params['QueueName']
         queue = queue_list.find(name)
-        
+
         queue    = queue_list.find(name)
-        receipts = params.select do |key, value| 
+        receipts = params.select do |key, value|
           key.match(/DeleteMessageBatchRequestEntry\.\d+\.ReceiptHandle/)
         end
 

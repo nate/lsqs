@@ -10,9 +10,9 @@ module LSQS
       #
       def perform(params)
         name  = params['QueueName']
-        
+
         queue = queue_list.find(name)
-        
+
         receipt = params['ReceiptHandle']
         queue.delete_message(receipt)
         return

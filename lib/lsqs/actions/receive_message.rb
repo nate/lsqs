@@ -12,7 +12,7 @@ module LSQS
         name  = params['QueueName']
         queue = queue_list.find(name)
         messages = queue.get_messages(params)
-        
+
         messages.each do |receipt, message|
           builder.Message do
             builder.MessageId message.id

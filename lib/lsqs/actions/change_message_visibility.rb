@@ -13,7 +13,7 @@ module LSQS
         visibility = params['VisibilityTimeout']
         receipt    = params['ReceiptHandle']
         queue = queue_list.find(name)
-        
+
         queue.change_message_visibility(receipt, visibility.to_i)
 
         return

@@ -10,9 +10,9 @@ module LSQS
       #
       def perform(params)
         base_url = params['base_url']
-        
+
         queues = queue_list.inspect(params)
-        
+
         queues.each do |queue|
           builder.QueueUrl build_url(base_url, queue)
         end

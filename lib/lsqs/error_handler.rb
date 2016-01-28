@@ -33,22 +33,22 @@ module LSQS
       'RequestExpired'              => 400,
       'RequestThrottled'            => 403,
       'ServiceUnavailable'          => 503,
-      'X509ParseError'              => 400  
+      'X509ParseError'              => 400
     }
-    
+
     def initialize(app)
       @app = app
     end
-    
+
     def call(env)
       begin
         @app.call env
       rescue => error
         xml = Builder::XmlMarkup.new(:index => 2)
-        
+
         status = ERROR_LIST[error.message] || 500
-        
-        
+
+
         xml.ErrorResponse do
           xml.Error do
             xml.Type error.message

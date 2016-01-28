@@ -1,14 +1,14 @@
 module LSQS
   class XMLTemplate
     attr_reader :template
-    
+
     TEMPLATE_DIR = File.expand_path('../../../config', __FILE__)
-    
+
     def initialize
       xml = File.read("#{TEMPLATE_DIR}/template.xml.liquid")
       @template = Liquid::Template.parse(xml)
     end
-    
+
     ##
     # Renders the XML that is required as a body response.
     #
@@ -17,15 +17,15 @@ module LSQS
     # @return [String]
     #
     def render(action)
-      options = { 
+      options = {
         'action'     => action.name,
         'content'    => action.to_xml,
         'request_id' => request_id
       }
-      
+
       template.render(options)
     end
-    
+
     ##
     # Renders the XML that is required for an error response
     #
@@ -38,10 +38,10 @@ module LSQS
         'error'      => error,
         'request_id' => request_id
       }
-      
+
       template.render(options)
     end
-    
+
     ##
     # Generates a request ID.
     #

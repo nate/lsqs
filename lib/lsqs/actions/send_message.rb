@@ -12,7 +12,7 @@ module LSQS
         name  = params['QueueName']
         queue = queue_list.find(name)
         message = queue.create_message(params)
-        
+
         builder.MD5OfMessageBody message.md5
         builder.MessageId message.id
       end

@@ -16,7 +16,7 @@ module LSQS
         "MD5"         => md5,
       }
     end
-    
+
     ##
     # Check if a message's visibility has timed out.
     #
@@ -25,7 +25,7 @@ module LSQS
     def expired?
       visibility_timeout.nil? || visibility_timeout < Time.now
     end
-    
+
     ##
     # Sets the time when the message should expire.
     #
@@ -36,7 +36,7 @@ module LSQS
     def expire_in(seconds)
       @visibility_timeout = Time.now + seconds
     end
-    
+
     ##
     # Resets the visibility time of the message.
     #

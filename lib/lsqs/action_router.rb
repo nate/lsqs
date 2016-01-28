@@ -2,14 +2,14 @@ module LSQS
   class ActionRouter
     class ActionError < NameError; end
     attr_reader :queue_list
-    
+
     ##
     # @param [LSQS::QueueList] queue_list
     #
     def initialize(queue_list)
       @queue_list = queue_list
     end
-    
+
     ##
     # Distributes an action to the appropriate class. If an action does not
     # exist, it throws an error.
@@ -25,7 +25,7 @@ module LSQS
         queue_list.query do
           action.perform(options)
         end
-        
+
         return action
       else
         raise ActionError, "undefined action `#{action_name}`"

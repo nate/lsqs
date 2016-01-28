@@ -11,11 +11,11 @@ module LSQS
       def perform(params)
         name  = params['QueueName']
         queue = queue_list.find(name)
-        
-        messages = params.select do |key, value| 
+
+        messages = params.select do |key, value|
           key.match(/SendMessageBatchRequestEntry\.\d+\.MessageBody/)
         end
-        
+
         result = {}
 
         messages.each do |key, value|
@@ -23,7 +23,7 @@ module LSQS
           msg_id  = params["SendMessageBatchRequestEntry.#{id}.Id"]
           delay   = params["SendMessageBatchRequestEntry.#{id}.DelaySeconds"]
           message = queue.create_message(
-            'MessageBody' => value, 
+            'MessageBody' => value,
             'DelaySeconds' => delay
           )
           result[msg_id] = message

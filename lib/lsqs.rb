@@ -33,11 +33,11 @@ module LSQS
   def self.template
     @template ||= XMLTemplate.new
   end
-  
+
   def self.router
     @router ||= ActionRouter.new(queue_list)
   end
-  
+
   def self.queue_list
     QueueList.new
   end

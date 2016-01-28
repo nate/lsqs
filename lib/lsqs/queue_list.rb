@@ -3,12 +3,12 @@ module LSQS
     include MonitorMixin
 
     attr_accessor :queues
-    
+
     def initialize
       super
       @queues  = {}
     end
-    
+
     ##
     # Purges the current queue list.
     #
@@ -17,7 +17,7 @@ module LSQS
     def purge
       @queues = {}
     end
-    
+
     ##
     # Creates a new queue, if it doesn't exist already.
     #
@@ -33,7 +33,7 @@ module LSQS
         raise 'QueueNameExists'
       end
     end
-    
+
     ##
     # Returns the names of the existing queues.
     #
@@ -48,7 +48,7 @@ module LSQS
         queues.values.map(&:name)
       end
     end
-    
+
     ##
     # Searches for a queue in the list by name.
     # If it doesn't find it, it creates it.
@@ -64,7 +64,7 @@ module LSQS
         raise 'NonExistentQueue'
       end
     end
-    
+
     ##
     # Deletes a queue if it exists.
     #
@@ -77,7 +77,7 @@ module LSQS
         raise 'NonExistentQueue'
       end
     end
-    
+
     ##
     # Queries the list of queues.
     #

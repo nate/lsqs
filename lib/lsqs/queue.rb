@@ -1,9 +1,9 @@
 module LSQS
   class Queue
     attr_accessor :name, :messages, :in_flight, :attributes, :monitor
-    
+
     DEFAULT_TIMEOUT = 30
-    
+
     def initialize(name, params = {})
       @name       = name
       @attributes = params.fetch('Attributes'){Hash.new}
@@ -11,10 +11,10 @@ module LSQS
       @messages   = []
       @in_flight  = {}
       @timeout    = true
-      
+
       check_timeout
     end
-    
+
     ##
     # Sets the default timeout of a queue. It takes the value from the
     # attributes, if it is set, otherwise it uses the `DEFAULT_TIMEOUT`
@@ -25,7 +25,7 @@ module LSQS
     def visibility_timeout
       attributes['VisibilityTimeout'] || DEFAULT_TIMEOUT
     end
-    
+
     ##
     # Creates a new message in the queue.
     #
@@ -40,7 +40,7 @@ module LSQS
         return message
       end
     end
-    
+
     ##
     # Gets a number of messages based on the MaxNumberOfMessages field.
     #
@@ -69,7 +69,7 @@ module LSQS
 
       return result
     end
-    
+
     ##
     # Deletes a message from the messages that are in-flight.
     #
@@ -80,7 +80,7 @@ module LSQS
         in_flight.delete(receipt)
       end
     end
-    
+
     ##
     # Deletes all messages in queue and in flight.
     #
@@ -90,7 +90,7 @@ module LSQS
         @in_flight = {}
       end
     end
-    
+
     ##
     # Returns the amount of messages in the queue.
     #
@@ -99,7 +99,7 @@ module LSQS
     def size
       messages.size
     end
-    
+
     ##
     # Generates a hex receipt for the message
     #
@@ -108,7 +108,7 @@ module LSQS
     def generate_receipt
       SecureRandom.hex(16)
     end
-    
+
     ##
     # Change the visibility of a message that is in flight. If visibility
     # is set to 0, put back in the queue.
@@ -130,10 +130,10 @@ module LSQS
         end
       end
     end
-    
+
     ##
     # Checks if in-fligh messages need to be put back in the queue.
-    # 
+    #
     def timeout_messages
       lock do
         in_flight.each do |key, message|
@@ -145,9 +145,9 @@ module LSQS
         end
       end
     end
-    
+
     protected
-    
+
     ##
     # Initializes a thread that checks every 5 seconds if messages need
     # to be put back from flight to the message queue.
@@ -162,11 +162,11 @@ module LSQS
         end
       end
     end
-    
+
     ##
     # Locks a block, in order to ensure that there is no conflict if more than
     # one processes try to access the object.
-    # 
+    #
     def lock
       @monitor.synchronize do
         yield
